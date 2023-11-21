@@ -1,0 +1,114 @@
+{
+  "pages": [
+    {
+      "type": "profile",
+      "routeName": "profile",
+      "title": "Profile",
+      "url": "/profile/info"
+    },
+    {
+      "type": "profile",
+      "routeName": "profile-info",
+      "title": "Profile",
+      "url": "/profile/info",
+      "icon": "mdi-account",
+      "enableTabs": true,
+      "enableChips": false,
+      "displayOnSidebar": true
+    },
+    {
+      "type": "profile",
+      "routeName": "profile-staff",
+      "title": "staff",
+      "url": "/profile/staff",
+      "icon": "mdi-account",
+      "enableTabs": true,
+      "enableChips": false,
+      "displayOnSidebar": false
+    },
+    {
+      "type": "vechicles",
+      "routeName": "index",
+      "title": "Vechicles",
+      "url": "/",
+      "icon": "ion:car-sport",
+      "enableTabs": false,
+      "enableChips": true,
+      "displayOnSidebar": true
+    },
+    {
+      "type": "vechicles",
+      "routeName": "car-id",
+      "title": "Vechicle car",
+      "icon": "ion:car-sport",
+      "enableTabs": false,
+      "enableChips": true,
+      "displayOnSidebar": false
+    },
+    {
+      "type": "settings",
+      "routeName": "settings",
+      "title": "Settings",
+      "url": "/setting/basicSetting",
+      "icon": "tdesign:brightness"
+    },
+    {
+      "type": "setting",
+      "routeName": "setting-basicSetting",
+      "title": "Setting",
+      "url": "/setting/basicSetting",
+      "icon": "tdesign:brightness",
+      "enableTabs": true,
+      "enableChips": false,
+      "displayOnSidebar": true
+    },
+    {
+      "type": "setting",
+      "routeName": "setting-backgrounds",
+      "title": "Backgrounds",
+      "url": "/setting/backgrounds",
+      "icon": "tdesign:brightness",
+      "enableTabs": true,
+      "enableChips": false,
+      "displayOnSidebar": false
+    },
+    {
+      "type": "setting",
+      "routeName": "setting-logos",
+      "title": "Logos",
+      "url": "/setting/logos",
+      "icon": "tdesign:brightness",
+      "enableTabs": true,
+      "enableChips": false,
+      "displayOnSidebar": false
+    }
+  ],
+
+  "tabs": [
+    {
+      "type": "setting",
+      "title": "Setting",
+      "url": "/setting/basicSetting"
+    },
+    {
+      "type": "setting",
+      "title": "Backgrounds",
+      "url": "/setting/backgrounds"
+    },
+    {
+      "type": "setting",
+      "title": "Logos",
+      "url": "/setting/logos"
+    },
+    {
+      "type": "profile",
+      "title": "Profile",
+      "url": "/profile/info"
+    },
+    {
+      "type": "profile",
+      "title": "Staff",
+      "url": "/profile/staff"
+    }
+  ]
+}
