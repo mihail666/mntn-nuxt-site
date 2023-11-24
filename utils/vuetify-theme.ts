@@ -6,7 +6,7 @@ export const MAIN_THEME = 'mainTheme'
 export const mainTheme: ThemeDefinition = {
   dark: false,
   colors: {
-    background: '#FFFFFF',
+    background: '#F1F1F1',
     surface: '#FFFFFF',
     primary: '#4f46e5',
     secondary: '#9333ea',

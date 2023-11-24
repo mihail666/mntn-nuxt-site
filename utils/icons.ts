@@ -40,6 +40,7 @@ const aliases: IconAliases = {
   minus: 'fluent:subtract-24-regular',
   sortAsc: 'mdi-menu-up',
   sortDesc: 'mdi-menu-down',
+  cart: 'solar:bag-5-linear'
 }
 
 const custom: IconSet = {

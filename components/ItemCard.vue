@@ -1,0 +1,106 @@
+<template>
+  <v-card
+    :loading="loading"
+    max-width="374"
+  >
+    <template v-slot:loader="{ isActive }">
+      <v-progress-linear
+        :active="isActive"
+        color="deep-purple"
+        height="4"
+        indeterminate
+      ></v-progress-linear>
+    </template>
+
+    <v-img
+      cover
+      height="300"
+      :src="item.thumbnail"
+    ></v-img>
+
+    <v-card-item>
+      <v-card-title>{{ item.title }}</v-card-title>
+
+      <v-card-subtitle>
+        <span class="me-1">Local Favorite</span>
+
+        <v-icon
+          color="error"
+          icon="mdi-fire-circle"
+          size="small"
+        ></v-icon>
+      </v-card-subtitle>
+    </v-card-item>
+
+    <v-card-text>
+      <v-row
+        align="center"
+        class="mx-0"
+      >
+        <v-rating
+          :model-value="item.rating"
+          color="amber"
+          density="compact"
+          half-increments
+          readonly
+          size="small"
+        ></v-rating>
+
+        <div class="text-grey ms-4">
+         {{ item.rating }}
+        </div>
+      </v-row>
+
+      <div class="my-4 text-subtitle-1">
+       {{ item.barand }}
+      </div>
+
+      <div class="post-text">
+        {{ item.description }}
+      </div>
+    </v-card-text>
+
+    <v-divider class="mx-4 mb-1"></v-divider>
+
+    <v-card-actions>
+      <v-btn
+        color="deep-purple-lighten-2"
+        variant="text"
+        @click="reserve(item.id)"
+      >
+        read more
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</template>
+
+<script setup lang="ts">
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
+const props = defineProps(['item'])
+const { item } = toRefs(props)
+
+let loading = ref(false)
+
+const reserve = (id: number) => {
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+    navigateTo('/item/' + id)
+  }, 1000)
+}
+
+</script>
+
+<style lang="scss">
+
+.post-text {
+  margin: 12px 0 8px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+</style>

@@ -1,5 +1,8 @@
 <template>
-  <VAppBar class="px-md-5 shadow">
+  <VAppBar class="px-md-5">
+    
+      <VIcon icon="logos:kaios" size="100" @click="navigateTo('/')"/>
+
     <VBtn
       @click="dialog = !dialog"
       icon
@@ -62,7 +65,7 @@
         </VList>
       </VCard>
     </v-menu>
-    <!-- Notification -->
+    <!-- cart -->
     <v-menu width="400">
       <template v-slot:activator="{ props }">
         <VBtn
@@ -150,17 +153,29 @@
         </v-list>
       </VCard>
     </v-menu>
-    <!-- Contacts -->
-    <v-menu width="300">
+    <!-- cart -->
+    <v-menu width="400">
       <template v-slot:activator="{ props }">
         <VBtn
           class="mr-2"
           v-bind="props"
           icon
+          :disabled="isCart"
         >
+          <v-badge
+            v-if="cartCount"
+            :content="cartCount"
+            color="primary"
+          >
+            <VIcon
+              class="text-medium-emphasis"
+              icon="solar:bag-5-linear"
+            />
+          </v-badge>
           <VIcon
             class="text-medium-emphasis"
-            icon="fluent:people-24-regular"
+            v-else
+            icon="solar:bag-5-linear"
           />
         </VBtn>
       </template>
@@ -168,41 +183,53 @@
         rounded="lg"
         class="shadow"
       >
-        <VCardTitle class="d-flex align-center py-4 justify-space-between">
-          <span class="font-weight-bold text-subtitle-1">Contacts</span>
+        <VCardTitle class="d-flex align-center justify-space-between">
+          <span class="font-weight-bold text-subtitle-1">Cart</span>
         </VCardTitle>
-        <v-list nav>
+        <v-list lines="three">
           <v-list-item
-            v-for="item in contacts"
-            :key="item.name"
+            density="comfortable"
+            v-for="item in userStore.cart"
+            :key="item"
             :value="item"
+            @click="navigateTo('/shoppingCart')"
           >
             <template #prepend>
               <VAvatar
-                size="32"
-                :image="item.image"
+                size="50"
+                class=""
               >
+                <VImg
+                  cover
+                  class="md-2"
+                  :src="item.thumbnail"
+                >
+                </VImg>
               </VAvatar>
             </template>
             <template #title>
               <span
-                v-html="item.name"
-                class="text-subtitle-2 font-weight-medium"
+                v-html="item.title"
+                class="text-subtitle-1 font-weight-bold"
               ></span>
             </template>
-            <template #append>
-              <VBadge
-                :color="item.online ? 'success' : 'grey-lighten-1'"
-                inline
-                location="end center"
-                dot
-              ></VBadge>
+            <template #subtitle>
+              <span
+                :class="[darkTheme ? 'font-weight-light' : '']"
+                v-html="item.brand"
+                class="text-subtitle-2"
+              ></span>
+              <br />
+              <span
+                :class="[darkTheme ? 'text-primary-lighten-2' : 'text-primary']"
+                class="text-caption"
+                >{{ item.category }}</span
+              >
             </template>
           </v-list-item>
         </v-list>
       </VCard>
     </v-menu>
-
     <!-- Profile -->
     <v-menu width="250">
       <template v-slot:activator="{ props }">
@@ -212,7 +239,7 @@
           icon
         >
           <VAvatar size="36">
-            <VImg src="https://randomuser.me/api/portraits/med/men/25.jpg" />
+            <VImg src="https://avatars.githubusercontent.com/u/76650506?v=4" />
           </VAvatar>
         </VBtn>
       </template>
@@ -222,10 +249,10 @@
       >
         <VListItem class="ma-2 mb-3">
           <template #title>
-            <span class="text-subtitle-1 font-weight-medium">John Smith</span>
+            <span class="text-subtitle-1 font-weight-medium">Mihail FR</span>
           </template>
           <template #subtitle>
-            <span>johnsmith@example.com</span>
+            <span>fmr@example.com</span>
           </template>
         </VListItem>
         <VDivider />
@@ -234,6 +261,7 @@
             v-for="item in profileActions"
             :key="item.title"
             :value="item"
+            @click="goTo(item.url)"
           >
             <template #prepend>
               <VIcon
@@ -326,21 +354,30 @@
   </VAppBar>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useTheme } from 'vuetify'
 import dayjs from 'dayjs'
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
 
 const theme = useTheme()
 
 const languages = ref([
-  { icon: 'flag:jm-4x3', title: 'English' },
-  { icon: 'flag:es-4x3', title: 'Spanish' },
-  { icon: 'flag:fr-4x3', title: 'French' },
+  { icon: 'material-symbols:language-us', title: 'English' },
+  { icon: 'material-symbols:language-spanish-rounded', title: 'Spanish' },
+  { icon: 'material-symbols:language-french', title: 'French' },
 ])
 const selectedLanguage = ref(languages.value[0])
+const cartCount = computed(() => userStore.cart.length)
+const isCart = computed(() => {
+  if (userStore.cart.length > 0) {
+    return false
+  }
+  return true
+})
 
 const notificationCount = ref(2)
-
 const notifications = ref([
   {
     title: 'New Order',
@@ -356,29 +393,6 @@ const notifications = ref([
   },
 ])
 
-const contacts = ref([
-  {
-    image: 'https://randomuser.me/api/portraits/med/women/75.jpg',
-    name: 'Linda Cross',
-    online: true,
-  },
-  {
-    image: 'https://randomuser.me/api/portraits/med/men/75.jpg',
-    name: 'James Smith',
-    online: true,
-  },
-  {
-    image: 'https://randomuser.me/api/portraits/med/men/35.jpg',
-    name: 'Carlos Sanchez',
-    online: false,
-  },
-  {
-    image: 'https://randomuser.me/api/portraits/med/women/35.jpg',
-    name: 'Cindy Lowe',
-    online: true,
-  },
-])
-
 const toggleTheme = () => {
   theme.global.name.value =
     theme.global.name.value == MAIN_THEME ? MAIN_DARK_THEME : MAIN_THEME
@@ -387,10 +401,14 @@ const toggleTheme = () => {
 const darkTheme = computed(() => theme.current.value.dark)
 
 const profileActions = ref([
-  { icon: 'fluent:person-24-regular', title: 'Profile' },
-  { icon: 'fluent:settings-24-regular', title: 'Settings' },
-  { icon: 'fluent:wallet-credit-card-24-regular', title: 'Billing' },
+  { icon: 'fluent:person-24-regular', title: 'Profile', url: '/profile' },
+  { icon: 'solar:bag-5-linear', title: 'Cart', url: '/shoppingCart' },
+  { icon: 'fluent:settings-24-regular', title: 'Settings', url: '/settings' },
 ])
+
+const goTo = (value: string) => {
+  return navigateTo(value)
+}
 
 const dialog = ref(false)
 

@@ -9,4 +9,7 @@ export const defaults: DefaultsInstance = {
     variant: 'outlined',
     density: 'comfortable',
   },
+  VCard: {
+    elevation: 2,
+  }
 }
