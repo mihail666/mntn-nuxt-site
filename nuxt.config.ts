@@ -1,7 +1,7 @@
 import vuetify from 'vite-plugin-vuetify'
 // PWA Config
 const title = 'qtim'
-const shortTitle = 'makretplace'
+const shortTitle = 'Marketplace'
 
 export default defineNuxtConfig({
   pages: true,
