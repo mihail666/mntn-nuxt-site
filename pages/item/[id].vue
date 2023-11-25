@@ -6,11 +6,11 @@
           <VCol cols="3">
             <v-infinite-scroll
               :height="400"
-              :items="item.images"
+              :items="prod.images"
               class="pr-2"
             >
               <template
-                v-for="image in item.images"
+                v-for="image in prod.images"
                 :key="image"
               >
                 <v-img
@@ -35,20 +35,20 @@
         </VRow>
       </VCol>
       <VCol cols="7">
-        <VCard height="400">
+        <VCard>
           <v-card-text>
             <div class="mb-6">
-              <h1 class="text-h2">{{ item.title }}</h1>
+              <h1 class="text-h2">{{ prod.title }}</h1>
             </div>
             <div class="text-h6 mb-6">
-              {{ item.description }}
+              {{ prod.description }}
             </div>
             <v-row
               align="center"
               class="mx-0 mb-2"
             >
               <v-rating
-                :model-value="item.rating"
+                :model-value="prod.rating"
                 color="amber"
                 density="compact"
                 half-increments
@@ -57,12 +57,12 @@
               ></v-rating>
 
               <div class="text-grey ms-4">
-                {{ item.rating }}
+                {{ prod.rating }}
               </div>
             </v-row>
 
             <div class="text-h6 mb-2">
-              {{ item.category }}
+              {{ prod.category }}
             </div>
 
             <v-row
@@ -72,7 +72,7 @@
               <div class="text-h6">{{ priceComputed }}P</div>
 
               <div class="text-h6 ms-4 text-decoration-line-through">
-                {{ item.price }}P
+                {{ prod.price }}P
               </div>
             </v-row>
           </v-card-text>
@@ -83,7 +83,7 @@
             <v-btn
               color="deep-purple-lighten-2"
               variant="text"
-              @click="addToCart(item)"
+              @click="addToCart(prod)"
               :disabled="isInCart"
             >
               <div v-if="isInCart">Is Added</div>
@@ -105,23 +105,23 @@ const userStore = useUserStore()
 const route = useRoute()
 const { id } = useRoute().params
 
-let currentImage = ref('')
+let currentImage = ref<string>('')
 
-const { data: item } = await useAsyncData(
-  () => $fetch(`https://dummyjson.com/products/${id}`),
-  {
-    default: () => [],
-    transform: (data: any) => data,
-  }
-)
+let prod = ref<any>([])
+
+onBeforeMount(() => {
+  fetch(`https://dummyjson.com/products/${id}`)
+    .then((res) => res.json())
+    .then((data) => (prod.value = data))
+})
 
 watchEffect(() => {
-  currentImage.value = item.value.thumbnail
+  currentImage.value = prod.value.thumbnail
 })
 
 const priceComputed = computed(() => {
-  if (item.value) {
-    return (item.value.price - item.value.price / 100).toFixed(2)
+  if (prod.value) {
+    return (prod.value.price - prod.value.price / 100).toFixed(2)
   }
   return '0.00'
 })
@@ -136,8 +136,9 @@ const isInCart = computed(() => {
   return res
 })
 
-const addToCart = (item: any) => {
-  userStore.cart.push(item)
+const addToCart = (prod: any) => {
+  //@ts-ignore
+  userStore.cart.push(prod)
 }
 </script>
 

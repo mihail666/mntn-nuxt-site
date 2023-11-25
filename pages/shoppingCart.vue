@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <v-card
-      v-if="!userStore.cart.length"
+      v-if="!cartArr.length"
       class="mx-auto text-center"
       title="Add the necessary products to the basket"
       text="And to find them, look in the catalog or in the section with discounts "
@@ -16,7 +16,7 @@
         >
       </v-card-actions>
     </v-card>
-    <VRow v-if="userStore.cart.length">
+    <VRow v-if="cartArr.length">
       <VCol cols="8">
         <VCard class="m-3 px-6 py-10">
           <v-list
@@ -27,8 +27,8 @@
 
             <v-list-item
               density="comfortable"
-              v-for="item in userStore.cart"
-              :key="item"
+              v-for="item in cartArr"
+              :key="item.id"
             >
               <template #prepend>
                 <v-list-item-action start>
@@ -94,12 +94,6 @@
               >go to checkout</v-btn
             >
           </v-card-actions>
-          <v-card-actions>
-            <v-btn
-              @click="navigateTo('/address')"
-              >add address</v-btn
-            >
-          </v-card-actions>
         </VCard>
       </VCol>
     </VRow>
@@ -110,9 +104,17 @@
 //@ts-ignore
 import MainLayout from '~/layouts/MainLayout.vue'
 import { useUserStore } from '~/stores/user'
+import { type item } from '@/types'
 
 const userStore = useUserStore()
-let selectedArray = ref([])
+
+let cartArr = ref<item[]>([])
+let selectedArray = ref<item[]>([])
+
+onBeforeMount(() => {
+  cartArr.value = userStore.cart
+})
+
 
 const totalPriceComputed = computed(() => {
   let price = 0

@@ -2,11 +2,13 @@ export const useUserStore = defineStore('user', {
   state: () => {
     return {
       user: null,
-      isLoading: false,
+      isLoading: true,
       cart: [],
       checkout: [],
-      userInfo: [],
-      userAddress: []
+      userInfo: [
+        {'name': 'mihail', 'email': 'fam@gmail.com', 'phone': '+79958360911', 'select': 'item 1', }
+      ],
+      address: []
     }
   },
 })

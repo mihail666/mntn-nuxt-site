@@ -1,5 +1,6 @@
 <template>
-  <MainLayout ><v-card
+  <MainLayout class="position-relative"
+    ><v-card
       v-if="!userStore.checkout.length"
       class="mx-auto text-center"
       title="Add the necessary products to the basket"
@@ -20,7 +21,10 @@
         >
       </v-card-actions>
     </v-card>
-    <VRow v-if="userStore.checkout.length">
+    <VRow
+      v-if="userStore.checkout.length"
+      class="position-relative h70"
+    >
       <VCol cols="8">
         <VCard class="m-3 px-6 py-10">
           <v-list
@@ -31,8 +35,8 @@
 
             <v-list-item
               density="comfortable"
-              v-for="item in userStore.checkout"
-              :key="item"
+              v-for="item in checkoutArr"
+              :key="item.id"
             >
               <template #prepend>
                 <VImg
@@ -89,38 +93,77 @@
           <VDivider></VDivider>
           <v-card-actions>
             <v-btn
-              class=""
-              @click="0"
+              @click="dialog = !dialog"
+              :disabled="!canBay"
               >bay</v-btn
             >
-            <v-btn 
-              class=""
-              @click="navigateTo('/address')"
-              >update address</v-btn
-            >
+            <v-btn @click="navigateTo('/addAddress')">
+              <div v-if="!addressUser.length">add address</div>
+              <div v-else>update address</div>
+            </v-btn>
           </v-card-actions>
         </VCard>
         <!-- adderss -->
-        <VCard class="mt-6">
+        <VCard
+          class="mt-6"
+          v-if="addressUser.length"
+        >
           <VCardTitle class="d-flex align-center justify-space-between">
             <span class="font-weight-bold text-subtitle-1">Address</span>
           </VCardTitle>
-          <VList lines="one">
+
+          <VList>
             <VListItem
-              v-for="item in checkoutCart"
-              :key="item.title"
+              v-for="item in addressUser"
+              :key="item.id"
             >
-              <template #title>
-                <span
-                  v-html="item.title"
-                  class="font-weight-bold mr-3"
-                ></span>
-                <span v-html="item.total"></span>
-              </template>
+              <div>
+                <span class="font-weight-bold mr-3">City</span>{{ item.city }}
+              </div>
+              <div>
+                <span class="font-weight-bold mr-3">Country</span
+                >{{ item.country }}
+              </div>
+              <div>
+                <span class="font-weight-bold mr-3">Address</span
+                >{{ item.address }}
+              </div>
             </VListItem>
-          </VList>  
+          </VList>
+        </VCard>
+        <!-- profile -->
+        <VCard class="mt-6">
+          <VCardTitle class="d-flex align-center justify-space-between">
+            <span class="font-weight-bold text-subtitle-1">Profile</span>
+          </VCardTitle>
+
+          <VList>
+            <VListItem
+              v-for="item in userInfo"
+              :key="item.id"
+            >
+              <div>
+                <span class="font-weight-bold mr-3">Name</span>{{ item.name }}
+              </div>
+              <div>
+                <span class="font-weight-bold mr-3">Email</span>{{ item.email }}
+              </div>
+              <div>
+                <span class="font-weight-bold mr-3">Phone</span>{{ item.phone }}
+              </div>
+            </VListItem>
+          </VList>
         </VCard>
       </VCol>
+      <div
+        class="w-100 top20 d-flex align-center justify-center position-absolute"
+        v-if="dialog"
+      >
+        <Confirm
+          v-model="dialog"
+          @close="dialog = false"
+        />
+      </div>
     </VRow>
   </MainLayout>
 </template>
@@ -129,8 +172,14 @@
 //@ts-ignore
 import MainLayout from '~/layouts/MainLayout.vue'
 import { useUserStore } from '~/stores/user'
+import { type item, type user } from '@/types'
 
 const userStore = useUserStore()
+const dialog = ref(false)
+
+let checkoutArr = ref<item[]>([])
+let addressUser = ref<user[]>([])
+let userInfo = ref<any>([])
 
 const totalPriceComputed = computed(() => {
   let price = 0
@@ -138,6 +187,13 @@ const totalPriceComputed = computed(() => {
     price += prod.price
   })
   return price
+})
+
+const canBay = computed(() => {
+  if (addressUser.value && userInfo.value) {
+    return true
+  }
+  return false
 })
 
 const checkoutCart = ref([
@@ -150,9 +206,12 @@ const checkoutCart = ref([
     total: userStore.checkout.length,
   },
 ])
-const bay = () => {
-  
-}
+
+onBeforeMount(() => {
+  checkoutArr.value = userStore.cart
+  addressUser.value = userStore.address
+  userInfo.value = userStore.userInfo
+})
 </script>
 
 <style scoped></style>

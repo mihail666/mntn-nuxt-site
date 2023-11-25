@@ -3,16 +3,16 @@
     <HeaderBar />
 
     <v-main>
-      <v-container>
+      <v-container class="position-relative">
         <slot />
       </v-container>
     </v-main>
 
-    <footer-bar />
+    <FooterBar />
   </v-app>
 </template>
 
-<script setup >
+<script setup>
 import { useUserStore } from '~/stores/user.ts'
 const userStore = useUserStore()
 </script>

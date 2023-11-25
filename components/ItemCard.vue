@@ -22,7 +22,7 @@
       <v-card-title>{{ item.title }}</v-card-title>
 
       <v-card-subtitle>
-        <span class="me-1">Local Favorite</span>
+        <span class="me-1">{{ item.category }}</span>
 
         <v-icon
           color="error"
@@ -37,6 +37,17 @@
         align="center"
         class="mx-0"
       >
+        <div class="text-h6 font-weight-medium mt-1 ms-1">
+          {{ item.price }} p
+        </div>
+        <div class="text-grey text-h6 font-weight-medium mt-1 ml-2">
+          {{ item.discountPercentage }} %
+        </div>
+      </v-row>
+      <v-row
+        align="center"
+        class="mx-0 py-1"
+      >
         <v-rating
           :model-value="item.rating"
           color="amber"
@@ -46,14 +57,10 @@
           size="small"
         ></v-rating>
 
-        <div class="text-grey ms-4">
-         {{ item.rating }}
+        <div class="text-grey mt-1 ms-1">
+          {{ item.rating }}
         </div>
       </v-row>
-
-      <div class="my-4 text-subtitle-1">
-       {{ item.barand }}
-      </div>
 
       <div class="post-text">
         {{ item.description }}
@@ -90,17 +97,15 @@ const reserve = (id: number) => {
     navigateTo('/item/' + id)
   }, 1000)
 }
-
 </script>
 
 <style lang="scss">
-
 .post-text {
   margin: 12px 0 8px 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 </style>

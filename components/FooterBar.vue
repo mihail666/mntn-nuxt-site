@@ -29,7 +29,10 @@
           </v-list>
           <v-list class="mx-auto bg-backgroundFooter">
             <p class="mb-3">For all questions</p>
-            <p>139 Ruben Station <br> Lake Drew, NM 52678</p>
+            <p>
+              139 Ruben Station <br />
+              Lake Drew, NM 52678
+            </p>
           </v-list>
         </v-col>
         <v-col
@@ -66,7 +69,6 @@
           </v-list>
           <v-list class="mx-auto bg-backgroundFooter">
             <p class="mb-3">For all questions</p>
-    
           </v-list>
         </v-col>
       </v-row>

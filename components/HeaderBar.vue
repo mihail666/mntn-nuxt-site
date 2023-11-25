@@ -1,15 +1,11 @@
 <template>
   <VAppBar class="px-md-5">
-    
-      <VIcon icon="logos:kaios" size="100" @click="navigateTo('/')"/>
+    <VIcon
+      icon="logos:kaios"
+      size="100"
+      @click="navigateTo('/')"
+    />
 
-    <VBtn
-      @click="dialog = !dialog"
-      icon
-      variant="plain"
-    >
-      <VIcon icon="fluent:search-24-regular" />
-    </VBtn>
     <VSpacer />
     <!-- Theme switcher -->
     <VBtn
@@ -65,7 +61,7 @@
         </VList>
       </VCard>
     </v-menu>
-    <!-- cart -->
+    <!-- notification -->
     <v-menu width="400">
       <template v-slot:activator="{ props }">
         <VBtn
@@ -184,15 +180,33 @@
         class="shadow"
       >
         <VCardTitle class="d-flex align-center justify-space-between">
-          <span class="font-weight-bold text-subtitle-1">Cart</span>
+          <span class="font-weight-bold text-subtitle-1"> Cart </span>
+          <VTooltip
+            location="bottom"
+            text="go to cart"
+          >
+            <template v-slot:activator="{ props }">
+              <VBtn
+                @click="navigateTo('/shoppingCart')"
+                v-bind="props"
+                icon
+                flat
+              >
+                <VIcon
+                  size="22"
+                  icon="solar:bag-5-linear"
+                />
+              </VBtn>
+            </template>
+          </VTooltip>
         </VCardTitle>
         <v-list lines="three">
           <v-list-item
             density="comfortable"
-            v-for="item in userStore.cart"
-            :key="item"
+            v-for="item in cartArr"
+            :key="item.id"
             :value="item"
-            @click="navigateTo('/shoppingCart')"
+            @click="navigateTo(`/item/${item.id}`)"
           >
             <template #prepend>
               <VAvatar
@@ -293,75 +307,19 @@
         </VList>
       </VCard>
     </v-menu>
-
-    <!-- Search modal -->
-    <VDialog
-      z-index="99999"
-      :scrim="darkTheme ? 'grey-darken-4' : 'grey-darken-2'"
-      scrollable
-      v-model="dialog"
-      max-width="400"
-    >
-      <VCard rounded="lg">
-        <VCardTitle class="d-flex justify-space-between align-center">
-          <span class="text-h6 font-weight-medium">Search</span>
-          <VBtn
-            @click="dialog = false"
-            flat
-            size="small"
-            icon
-          >
-            <VIcon icon="fluent:dismiss-24-regular" />
-          </VBtn>
-        </VCardTitle>
-        <VCardText class="pb-0">
-          <VTextField
-            clearable
-            autofocus
-            v-model="search"
-            placeholder="Enter a search value..."
-            prepend-inner-icon="fluent:search-24-regular"
-          />
-        </VCardText>
-        <VExpandTransition leave-absolute>
-          <VCardText
-            v-if="search"
-            class="pa-0"
-            style="height: 300px"
-          >
-            <VList lines="two">
-              <VListSubheader>Results</VListSubheader>
-              <VListItem
-                v-for="n in searchResults"
-                :key="`search-${n.name}`"
-                :title="n.name"
-                :prepend-avatar="n.image"
-              >
-                <template #subtitle>
-                  <span
-                    >Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Laudantium, neque. Ad eligendi quis ab vero laborum placeat
-                    doloribus quae voluptatum veniam, culpa ullam magnam iure
-                    mollitia qui sequi deserunt similique!</span
-                  >
-                </template>
-              </VListItem>
-            </VList>
-          </VCardText>
-        </VExpandTransition>
-      </VCard>
-    </VDialog>
   </VAppBar>
 </template>
 
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import dayjs from 'dayjs'
 import { useUserStore } from '~/stores/user'
+import { type item } from '@/types'
+import dayjs from 'dayjs'
 
 const userStore = useUserStore()
-
 const theme = useTheme()
+
+let cartArr = ref<item[]>([])
 
 const languages = ref([
   { icon: 'material-symbols:language-us', title: 'English' },
@@ -410,17 +368,9 @@ const goTo = (value: string) => {
   return navigateTo(value)
 }
 
-const dialog = ref(false)
-
-const searchResults = ref([
-  { image: 'http://placeimg.com/480/480/cats', name: 'Gloria Maggio' },
-  { image: 'http://placeimg.com/480/480/cats', name: 'Meredith Kohler' },
-  { image: 'http://placeimg.com/480/480/cats', name: 'George Rosenbaum PhD' },
-  { image: 'http://placeimg.com/480/480/cats', name: 'Cecilia Cassin' },
-  { image: 'http://placeimg.com/480/480/cats', name: 'Courtney Walsh DVM' },
-  { image: 'http://placeimg.com/480/480/cats', name: 'Ralph Bechtelar Jr.' },
-])
-const search = ref('')
+onBeforeMount(() => {
+  cartArr.value = userStore.cart
+})
 </script>
 
 <style lang="scss" scoped></style>

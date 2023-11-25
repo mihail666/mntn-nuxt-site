@@ -7,7 +7,6 @@
       <form @submit.prevent="submit()">
         <v-text-field
           v-model="state.address"
-          :error-messages="v$.address.$errors.map((e) => e.$message)"
           :counter="10"
           label="Address"
           required
@@ -17,7 +16,6 @@
 
         <v-text-field
           v-model="state.city"
-          :error-messages="v$.city.$errors.map((e) => e.$message)"
           :counter="10"
           label="City"
           required
@@ -27,7 +25,6 @@
 
         <v-text-field
           v-model="state.country"
-          :error-messages="v$.country.$errors.map((e) => e.$message)"
           :counter="10"
           label="Country"
           required
@@ -37,7 +34,6 @@
 
         <v-checkbox
           v-model="state.checkbox"
-          :error-messages="v$.checkbox.$errors.map((e) => e.$message)"
           label="Do you agree?"
           required
           @change="v$.checkbox.$touch"
@@ -61,13 +57,13 @@
 //@ts-ignore
 import MainLayout from '~/layouts/MainLayout.vue'
 import { useUserStore } from '~/stores/user'
+import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { email, required } from '@vuelidate/validators'
 
-let currentAddress = ref(null)
+let currentAddress = ref<any>([])
 const userStore = useUserStore()
 const initialState = {
-  checkbox: null,
+  checkbox: false,
   address: '',
   city: '',
   country: '',
@@ -87,25 +83,29 @@ const rules = {
 const v$ = useVuelidate(rules, state)
 
 watchEffect(() => {
-  currentAddress.value =  userStore.userAddress
-
-  state.address = currentAddress.value[0].address,
-  state.city = currentAddress.value[0].city,
-  state.country = currentAddress.value[0].country
-  
+  if (userStore.address.length) {
+      (currentAddress.value = userStore.address[0]),
+      (state.address = currentAddress.value.address),
+      (state.city = currentAddress.value.city),
+      (state.country = currentAddress.value.country)
+  }
 })
-
 
 function clear() {
   v$.value.$reset()
 
   for (const [key, value] of Object.entries(initialState)) {
+    //@ts-ignore
     state[key] = value
   }
 }
 const submit = () => {
-  userStore.userAddress.push(state)
-  return navigateTo('/shoppingCart')
+  if (userStore.address.length > 0) {
+    userStore.address.splice(0, 1)
+  }
+  //@ts-ignore
+  userStore.address.push(state)
+  return navigateTo('/checkout')
 }
 </script>
 
