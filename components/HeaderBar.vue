@@ -3,6 +3,7 @@
     <VIcon
       icon="logos:kaios"
       size="100"
+      class="ml-3"
       @click="navigateTo('/')"
     />
 
