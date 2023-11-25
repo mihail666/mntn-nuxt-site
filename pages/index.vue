@@ -13,18 +13,17 @@
     </v-overlay>
     <template v-if="!userStore.isLoading">
       <v-row>
-        <v-col cols="3">
+        <v-col cols="3" xl="2">
           <SideBar
             @fiterParams="fiterFunc"
             @filterClear="filterClear"
           />
         </v-col>
-        <v-col cols="9">
+        <v-col cols="9" xl="10">
           <v-card
             v-if="isShow"
             class="mx-auto text-center"
             title="not found"
-            text=""
             max-width="500"
             :elevation="0"
           >
@@ -36,8 +35,7 @@
             <v-col
               v-for="item in paginatedItem"
               :key="item.id"
-              cols="4"
-              class=""
+              cols="12" md="5" lg="4" xl="3" 
             >
               <ItemCard :item="item" />
             </v-col>
@@ -50,8 +48,6 @@
           v-model="page"
           :length="pages"
           :total-visible="7"
-          active-color="black"
-          color="black"
         ></v-pagination>
       </div>
     </template>
@@ -74,9 +70,9 @@ let page = ref(1)
 
 const pages = computed(() => {
   if (filterArr.value.length) {
-    return Math.ceil(filterArr.value.length / 6)
+    return Math.ceil(filterArr.value.length / 8)
   } else {
-    return Math.ceil(items.value.length / 6)
+    return Math.ceil(items.value.length / 8)
   }
 })
 
@@ -88,8 +84,8 @@ const paginatedItem = computed(() => {
   } else {
     arr = items.value
   }
-  const from = (page.value - 1) * 6
-  const to = from + 6
+  const from = (page.value - 1) * 8
+  const to = from + 8
   return arr.slice(from, to)
 })
 

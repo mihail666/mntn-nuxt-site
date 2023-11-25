@@ -21,12 +21,12 @@
         >
       </v-card-actions>
     </v-card>
-    <VRow
+    <v-row
       v-if="userStore.checkout.length"
       class="position-relative h70"
     >
-      <VCol cols="8">
-        <VCard class="m-3 px-6 py-10">
+      <v-col cols="8">
+        <v-card class="m-3 px-6 py-10">
           <v-list
             lines="three"
             select-strategy="classic"
@@ -39,14 +39,14 @@
               :key="item.id"
             >
               <template #prepend>
-                <VImg
+                <v-img
                   cover
                   width="100"
                   height="100"
                   class="mr-8"
                   :src="item.thumbnail"
                 >
-                </VImg>
+                </v-img>
               </template>
 
               <template #title>
@@ -69,15 +69,15 @@
               </template>
             </v-list-item>
           </v-list>
-        </VCard>
-      </VCol>
-      <VCol cols="4">
-        <VCard>
-          <VCardTitle class="d-flex align-center justify-space-between">
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card>
+          <v-cardTitle class="d-flex align-center justify-space-between">
             <span class="font-weight-bold text-subtitle-1">Summary</span>
-          </VCardTitle>
-          <VList lines="one">
-            <VListItem
+          </v-cardTitle>
+          <v-list lines="one">
+            <v-listItem
               v-for="item in checkoutCart"
               :key="item.title"
             >
@@ -88,9 +88,9 @@
                 ></span>
                 <span v-html="item.total"></span>
               </template>
-            </VListItem>
-          </VList>
-          <VDivider></VDivider>
+            </v-listItem>
+          </v-list>
+          <v-divider></v-divider>
           <v-card-actions>
             <v-btn
               @click="dialog = !dialog"
@@ -102,18 +102,18 @@
               <div v-else>update address</div>
             </v-btn>
           </v-card-actions>
-        </VCard>
+        </v-card>
         <!-- adderss -->
-        <VCard
+        <v-card
           class="mt-6"
           v-if="addressUser.length"
         >
-          <VCardTitle class="d-flex align-center justify-space-between">
+          <v-cardTitle class="d-flex align-center justify-space-between">
             <span class="font-weight-bold text-subtitle-1">Address</span>
-          </VCardTitle>
+          </v-cardTitle>
 
-          <VList>
-            <VListItem
+          <v-list>
+            <v-listItem
               v-for="item in addressUser"
               :key="item.id"
             >
@@ -128,17 +128,17 @@
                 <span class="font-weight-bold mr-3">Address</span
                 >{{ item.address }}
               </div>
-            </VListItem>
-          </VList>
-        </VCard>
+            </v-listItem>
+          </v-list>
+        </v-card>
         <!-- profile -->
-        <VCard class="mt-6">
-          <VCardTitle class="d-flex align-center justify-space-between">
+        <v-card class="mt-6">
+          <v-cardTitle class="d-flex align-center justify-space-between">
             <span class="font-weight-bold text-subtitle-1">Profile</span>
-          </VCardTitle>
+          </v-cardTitle>
 
-          <VList>
-            <VListItem
+          <v-list>
+            <v-listItem
               v-for="item in userInfo"
               :key="item.id"
             >
@@ -151,10 +151,10 @@
               <div>
                 <span class="font-weight-bold mr-3">Phone</span>{{ item.phone }}
               </div>
-            </VListItem>
-          </VList>
-        </VCard>
-      </VCol>
+            </v-listItem>
+          </v-list>
+        </v-card>
+      </v-col>
       <div
         class="w-100 top20 d-flex align-center justify-center position-absolute"
         v-if="dialog"
@@ -164,7 +164,7 @@
           @close="dialog = false"
         />
       </div>
-    </VRow>
+    </v-row>
   </MainLayout>
 </template>
 

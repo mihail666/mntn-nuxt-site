@@ -8,6 +8,7 @@
       append-icon="$close"
       elevation="16"
       max-width="500"
+      max-height="570"
       class="mx-auto"
       title="Send a receipt"
     >

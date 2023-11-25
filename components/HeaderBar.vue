@@ -1,45 +1,45 @@
 <template>
-  <VAppBar class="px-md-5">
-    <VIcon
+  <v-app-bar class="px-md-5">
+    <v-Icon
       icon="logos:kaios"
       size="100"
       class="ml-3"
       @click="navigateTo('/')"
     />
 
-    <VSpacer />
+    <v-spacer />
     <!-- Theme switcher -->
-    <VBtn
+    <v-btn
       @click="toggleTheme"
       class="mr-2"
       icon
     >
-      <VIcon
+      <v-Icon
         class="text-medium-emphasis"
         icon="fluent:weather-sunny-24-regular"
       />
-    </VBtn>
+    </v-btn>
     <!-- Language Switcher -->
     <v-menu width="180">
       <template v-slot:activator="{ props }">
-        <VBtn
+        <v-btn
           class="mr-2"
           v-bind="props"
           icon
         >
-          <VIcon
+          <v-Icon
             v-if="selectedLanguage"
             class="text-medium-emphasis"
             :icon="selectedLanguage?.icon"
           />
-        </VBtn>
+        </v-btn>
       </template>
-      <VCard
+      <v-card
         rounded="lg"
         class="shadow"
       >
-        <VList>
-          <VListSubheader>Select language</VListSubheader>
+        <v-list>
+          <v-list-subheader>Select language</v-list-subheader>
           <v-list-item
             @click="selectedLanguage = item"
             class="mx-2 mb-2 rounded-lg"
@@ -49,7 +49,7 @@
             :value="item"
           >
             <template #prepend>
-              <VIcon
+              <v-Icon
                 :icon="item.icon"
                 size="22"
                 class="mr-4"
@@ -59,13 +59,13 @@
               item.title
             }}</v-list-item-title>
           </v-list-item>
-        </VList>
-      </VCard>
+        </v-list>
+      </v-card>
     </v-menu>
     <!-- notification -->
     <v-menu width="400">
       <template v-slot:activator="{ props }">
-        <VBtn
+        <v-btn
           class="mr-2"
           v-bind="props"
           icon
@@ -75,43 +75,43 @@
             :content="notificationCount"
             color="primary"
           >
-            <VIcon
+            <v-Icon
               class="text-medium-emphasis"
               icon="fluent:alert-24-regular"
             />
           </v-badge>
-          <VIcon
+          <v-Icon
             class="text-medium-emphasis"
             v-else
             icon="fluent:alert-24-regular"
           />
-        </VBtn>
+        </v-btn>
       </template>
-      <VCard
+      <v-card
         rounded="lg"
         class="shadow"
       >
-        <VCardTitle class="d-flex align-center justify-space-between">
+        <v-cardTitle class="d-flex align-center justify-space-between">
           <span class="font-weight-bold text-subtitle-1">Notifications</span>
-          <VTooltip
+          <v-tooltip
             location="bottom"
             text="Mark all as read"
           >
             <template v-slot:activator="{ props }">
-              <VBtn
+              <v-btn
                 @click="notificationCount = 0"
                 v-bind="props"
                 icon
                 flat
               >
-                <VIcon
+                <v-Icon
                   size="22"
                   icon="ph:envelope-open-light"
                 />
-              </VBtn>
+              </v-btn>
             </template>
-          </VTooltip>
-        </VCardTitle>
+          </v-tooltip>
+        </v-cardTitle>
         <v-list lines="three">
           <v-list-item
             density="comfortable"
@@ -120,12 +120,12 @@
             :value="item"
           >
             <template #prepend>
-              <VAvatar
+              <v-avatar
                 size="50"
                 class="bg-grey-lighten-3"
               >
-                <VIcon :icon="item.icon" />
-              </VAvatar>
+                <v-Icon :icon="item.icon" />
+              </v-avatar>
             </template>
             <template #title>
               <span
@@ -148,12 +148,12 @@
             </template>
           </v-list-item>
         </v-list>
-      </VCard>
+      </v-card>
     </v-menu>
     <!-- cart -->
     <v-menu width="400">
       <template v-slot:activator="{ props }">
-        <VBtn
+        <v-btn
           class="mr-2"
           v-bind="props"
           icon
@@ -164,43 +164,43 @@
             :content="cartCount"
             color="primary"
           >
-            <VIcon
+            <v-Icon
               class="text-medium-emphasis"
               icon="solar:bag-5-linear"
             />
           </v-badge>
-          <VIcon
+          <v-Icon
             class="text-medium-emphasis"
             v-else
             icon="solar:bag-5-linear"
           />
-        </VBtn>
+        </v-btn>
       </template>
-      <VCard
+      <v-card
         rounded="lg"
         class="shadow"
       >
-        <VCardTitle class="d-flex align-center justify-space-between">
+        <v-cardTitle class="d-flex align-center justify-space-between">
           <span class="font-weight-bold text-subtitle-1"> Cart </span>
-          <VTooltip
+          <v-tooltip
             location="bottom"
             text="go to cart"
           >
             <template v-slot:activator="{ props }">
-              <VBtn
+              <v-btn
                 @click="navigateTo('/shoppingCart')"
                 v-bind="props"
                 icon
                 flat
               >
-                <VIcon
+                <v-Icon
                   size="22"
                   icon="solar:bag-5-linear"
                 />
-              </VBtn>
+              </v-btn>
             </template>
-          </VTooltip>
-        </VCardTitle>
+          </v-tooltip>
+        </v-cardTitle>
         <v-list lines="three">
           <v-list-item
             density="comfortable"
@@ -210,17 +210,17 @@
             @click="navigateTo(`/item/${item.id}`)"
           >
             <template #prepend>
-              <VAvatar
+              <v-avatar
                 size="50"
                 class=""
               >
-                <VImg
+                <v-img
                   cover
                   class="md-2"
                   :src="item.thumbnail"
                 >
-                </VImg>
-              </VAvatar>
+                </v-img>
+              </v-avatar>
             </template>
             <template #title>
               <span
@@ -243,34 +243,34 @@
             </template>
           </v-list-item>
         </v-list>
-      </VCard>
+      </v-card>
     </v-menu>
     <!-- Profile -->
     <v-menu width="250">
       <template v-slot:activator="{ props }">
-        <VBtn
+        <v-btn
           class="mr-2"
           v-bind="props"
           icon
         >
-          <VAvatar size="36">
-            <VImg src="https://avatars.githubusercontent.com/u/76650506?v=4" />
-          </VAvatar>
-        </VBtn>
+          <v-avatar size="36">
+            <v-img src="https://avatars.githubusercontent.com/u/76650506?v=4" />
+          </v-avatar>
+        </v-btn>
       </template>
-      <VCard
+      <v-card
         rounded="lg"
         class="shadow"
       >
-        <VListItem class="ma-2 mb-3">
+        <v-list-item class="ma-2 mb-3">
           <template #title>
             <span class="text-subtitle-1 font-weight-medium">Mihail FR</span>
           </template>
           <template #subtitle>
             <span>fmr@example.com</span>
           </template>
-        </VListItem>
-        <VDivider />
+        </v-list-item>
+        <v-divider />
         <v-list nav>
           <v-list-item
             v-for="item in profileActions"
@@ -279,7 +279,7 @@
             @click="goTo(item.url)"
           >
             <template #prepend>
-              <VIcon
+              <v-Icon
                 class="text-medium-emphasis mr-5"
                 :icon="item.icon"
               />
@@ -292,11 +292,11 @@
             </template>
           </v-list-item>
         </v-list>
-        <VDivider />
-        <VList nav>
+        <v-divider />
+        <v-list nav>
           <v-list-item link>
             <template #prepend>
-              <VIcon
+              <v-Icon
                 class="text-medium-emphasis mr-5"
                 icon="fluent:arrow-exit-20-regular"
               />
@@ -305,10 +305,10 @@
               <span class="text-subtitle-2 font-weight-medium">Logout</span>
             </template>
           </v-list-item>
-        </VList>
-      </VCard>
+        </v-list>
+      </v-card>
     </v-menu>
-  </VAppBar>
+  </v-app-bar>
 </template>
 
 <script setup lang="ts">

@@ -1,9 +1,9 @@
 <template>
   <MainLayout>
-    <VRow>
-      <VCol cols="5">
-        <VRow>
-          <VCol cols="3">
+    <v-row>
+      <v-col cols="5">
+        <v-row>
+          <v-col cols="3">
             <v-infinite-scroll
               :height="400"
               :items="prod.images"
@@ -24,18 +24,18 @@
                 ></v-img>
               </template>
             </v-infinite-scroll>
-          </VCol>
-          <VCol cols="9"
+          </v-col>
+          <v-col cols="9"
             ><v-img
               cover
               height="400"
               :src="currentImage"
             ></v-img
-          ></VCol>
-        </VRow>
-      </VCol>
-      <VCol cols="7">
-        <VCard>
+          ></v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="7">
+        <v-card>
           <v-card-text>
             <div class="mb-6">
               <h1 class="text-h2">{{ prod.title }}</h1>
@@ -90,9 +90,9 @@
               <div v-else>Add to Cart</div>
             </v-btn>
           </v-card-actions>
-        </VCard>
-      </VCol>
-    </VRow>
+        </v-card>
+      </v-col>
+    </v-row>
   </MainLayout>
 </template>
 

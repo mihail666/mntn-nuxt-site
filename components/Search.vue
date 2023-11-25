@@ -1,60 +1,60 @@
 <template>
-  <VBtn
+  <v-btn
     @click="dialog = !dialog"
     icon
     variant="plain"
     class="mt-2"
   >
-    <VIcon icon="fluent:search-24-regular" />
-  </VBtn>
-  <VDialog
+    <v-icon icon="fluent:search-24-regular" />
+  </v-btn>
+  <v-dialog
     z-index="99999"
     scrollable
     v-model="dialog"
     max-width="500"
   >
-    <VCard rounded="lg">
-      <VCardTitle class="d-flex justify-space-between align-center">
+    <v-card rounded="lg">
+      <v-cardTitle class="d-flex justify-space-between align-center">
         <span class="text-h6 font-weight-medium">Search</span>
-        <VBtn
+        <v-btn
           @click="dialog = false"
           flat
           size="small"
           icon
         >
-          <VIcon icon="fluent:dismiss-24-regular" />
-        </VBtn>
-      </VCardTitle>
-      <VCardText class="pb-0">
-        <VTextField
+          <v-icon icon="fluent:dismiss-24-regular" />
+        </v-btn>
+      </v-cardTitle>
+      <v-cardText class="pb-0">
+        <v-text-field
           clearable
           autofocus
           v-model="search"
           placeholder="Enter a search value..."
           prepend-inner-icon="fluent:search-24-regular"
         />
-      </VCardText>
-      <VExpandTransition leave-absolute>
-        <VCardText
+      </v-cardText>
+      <v-expand-transition leave-absolute>
+        <v-cardText
           v-if="search"
           class="pa-0"
           style="height: 500px"
         >
-          <VList lines="two">
-            <VListSubheader>Results</VListSubheader>
-            <VListItem
+          <v-list lines="two">
+            <v-list-subheader>Results</v-list-subheader>
+            <v-list-item
               v-for="n in itemsSearch"
               :key="`search-${n.title}`"
               :title="n.title"
               :prepend-avatar="n.thumbnail"
               @click="navigateTo(`/item/${n.id}`)"
             >
-            </VListItem>
-          </VList>
-        </VCardText>
-      </VExpandTransition>
-    </VCard>
-  </VDialog>
+            </v-list-item>
+          </v-list>
+        </v-cardText>
+      </v-expand-transition>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">

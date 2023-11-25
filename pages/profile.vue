@@ -1,6 +1,6 @@
 <template>
   <MainLayout>
-    <VCard
+    <v-card
       class="pa-4 mx-auto"
       max-width="500"
     >
@@ -57,7 +57,7 @@
         </v-btn>
         <v-btn @click="clear"> clear </v-btn>
       </form>
-    </VCard>
+    </v-card>
   </MainLayout>
 </template>
 

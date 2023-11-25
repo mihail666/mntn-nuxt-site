@@ -16,19 +16,22 @@
         >
       </v-card-actions>
     </v-card>
-    <VRow v-if="cartArr.length">
-      <VCol cols="8">
-        <VCard class="m-3 px-6 py-10">
+    <v-row v-if="cartArr.length">
+      <v-col cols="8">
+        <v-card class="m-3 px-6 pb-4">
           <v-list
             lines="one"
             select-strategy="classic"
           >
-            <v-list-subheader>General</v-list-subheader>
+            <v-list-subheader class="text-h6 font-weight-medium"
+              >Cart</v-list-subheader
+            >
 
             <v-list-item
               density="comfortable"
               v-for="item in cartArr"
               :key="item.id"
+              class=""
             >
               <template #prepend>
                 <v-list-item-action start>
@@ -37,45 +40,63 @@
                     :value="item"
                   ></v-checkbox-btn>
                 </v-list-item-action>
-                <VImg
+                <v-img
                   cover
                   width="100"
                   height="100"
-                  class="mr-8"
+                  class="mr-8 my-4"
                   :src="item.thumbnail"
                 >
-                </VImg>
+                </v-img>
               </template>
 
               <template #title>
-                <span
-                  v-html="item.title"
-                  class="text-subtitle-2 font-weight-medium"
-                ></span>
-                <br />
-                <span class="text-subtitle-2 font-weight-medium"
-                  >{{ item.price }} P</span
-                >
+                <div class="d-flex align-center justify-space-between">
+                  <span class="text-subtitle-2 font-weight-medium"
+                    >{{ item.title }} <br> {{ item.price }} P
+                  </span>
+
+
+                  <v-tooltip
+                    location="bottom"
+                    text="Delete"
+                  >
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        @click="removeFromCart"
+                        v-bind="props"
+                        icon
+                        flat
+                      >
+                        <v-Icon
+                          size="22"
+                          icon="majesticons:delete-bin"
+                        />
+                      </v-btn>
+                    </template>
+                  </v-tooltip>
+                </div>
               </template>
+
               <template #subtitle>
                 <span
                   v-html="item.brand"
                   class="text-subtitle-2"
                 ></span>
                 <br />
-                <span class="text-caption">{{ item.category }}</span>
+                <span class="">{{ item.category }}</span>
               </template>
             </v-list-item>
           </v-list>
-        </VCard>
-      </VCol>
-      <VCol cols="4">
-        <VCard>
-          <VCardTitle class="d-flex align-center justify-space-between">
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card>
+          <v-cardTitle class="d-flex align-center justify-space-between">
             <span class="font-weight-bold text-subtitle-1">Summary</span>
-          </VCardTitle>
-          <VList lines="one">
-            <VListItem
+          </v-cardTitle>
+          <v-list lines="one">
+            <v-listItem
               v-for="item in shoppingCart"
               :key="item.title"
             >
@@ -84,19 +105,16 @@
                   v-html="item.title"
                   class="font-weight-bold mr-3"
                 ></span>
-                <span>{{item.total}} {{ item.type }}</span>
+                <span>{{ item.total }} {{ item.type }}</span>
               </template>
-            </VListItem>
-          </VList>
+            </v-listItem>
+          </v-list>
           <v-card-actions>
-            <v-btn
-              @click="goToCheckout"
-              >go to checkout</v-btn
-            >
+            <v-btn @click="goToCheckout">go to checkout</v-btn>
           </v-card-actions>
-        </VCard>
-      </VCol>
-    </VRow>
+        </v-card>
+      </v-col>
+    </v-row>
   </MainLayout>
 </template>
 
@@ -115,7 +133,6 @@ onBeforeMount(() => {
   cartArr.value = userStore.cart
 })
 
-
 const totalPriceComputed = computed(() => {
   let price = 0
   userStore.cart.forEach((prod: any) => {
@@ -128,14 +145,23 @@ const shoppingCart = ref([
   {
     title: 'Total',
     total: totalPriceComputed,
-    type: 'P'
+    type: 'P',
   },
   {
     title: 'qounts',
     total: userStore.cart.length,
-    type: ''
+    type: '',
   },
 ])
+
+const removeFromCart = () => {
+  console.log('del')
+  userStore.cart.forEach((prod: any, index) => {
+    if (prod.id == cartArr.value[index].id) {
+      userStore.cart.splice(index, 1)
+    }
+  })
+}
 
 const goToCheckout = () => {
   let ids: any = []

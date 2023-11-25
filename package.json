@@ -16,7 +16,9 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "nuxt": "^3.8.2",
     "nuxt-lodash": "^2.5.3",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "vue": "^3.3.9",
+    "vuetify-nuxt-module":"^0.7.0"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
