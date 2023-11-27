@@ -18,9 +18,10 @@
     "nuxt-lodash": "^2.5.3",
     "sass": "^1.69.5",
     "vue": "^3.3.9",
-    "vuetify-nuxt-module":"^0.7.0"
+    "vuetify-nuxt-module": "^0.7.0"
   },
   "dependencies": {
+    "@invictus.codes/nuxt-vuetify": "^0.2.20",
     "@pinia/nuxt": "^0.5.1",
     "@types/vuelidate": "^0.7.21",
     "@vuelidate/core": "^2.0.3",

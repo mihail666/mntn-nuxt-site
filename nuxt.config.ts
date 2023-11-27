@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@kevinmarrec/nuxt-pwa',
-    "",
+    '@invictus.codes/nuxt-vuetify',
     async (options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) =>
         // @ts-ignore
