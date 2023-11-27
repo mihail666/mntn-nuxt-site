@@ -1,3 +1,4 @@
+import "@/assets/variables.scss";
 import { createVuetify } from "vuetify";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -6,6 +7,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     components: {
     },
     defaults: defaults,
+    //@ts-ignore
+    styles: { configFile: 'assets/variables.scss' },
     theme: {
       defaultTheme: MAIN_THEME,
       themes: {

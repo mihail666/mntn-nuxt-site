@@ -22,14 +22,8 @@ export default defineNuxtConfig({
     '@kevinmarrec/nuxt-pwa',
     '@invictus.codes/nuxt-vuetify',
     async (options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) =>
-        // @ts-ignore
-        config.plugins.push(
-          vuetify({
-            styles: { configFile: 'assets/variables.scss' },
-          })
-        )
-      )
+      // @ts-ignore
+      nuxt.hooks.hook("vite:extendConfig", (config) => config.plugins.push(vuetify()))
     },
   ],
   // head config
